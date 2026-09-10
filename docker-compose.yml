@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  voicearmor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: voicearmor_ai
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=production
+      - AI_ENGINE_MODE=AUTO
+      - DATABASE_URL=sqlite:///./voicearmor.db
+    restart: unless-stopped
