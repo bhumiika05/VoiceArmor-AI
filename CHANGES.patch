@@ -1,0 +1,27 @@
+diff --git a/backend/app/main.py b/backend/app/main.py
+index 5544267..1f9966d 100644
+--- a/backend/app/main.py
++++ b/backend/app/main.py
+@@ -38,7 +38,6 @@ app.include_router(incidents.router)
+ app.include_router(dashboard.router)
+ app.include_router(analytics.router)
+ 
+-@app.get("/")
+ @app.get("/api")
+ @app.get("/api/")
+ def root():
+diff --git a/vercel.json b/vercel.json
+index 031e894..063a269 100644
+--- a/vercel.json
++++ b/vercel.json
+@@ -10,10 +10,6 @@
+     {
+       "source": "/api",
+       "destination": "/api/index.py"
+-    },
+-    {
+-      "source": "/(.*)",
+-      "destination": "/index.html"
+     }
+   ]
+ }
