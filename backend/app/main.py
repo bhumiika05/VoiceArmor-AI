@@ -39,6 +39,8 @@ app.include_router(dashboard.router)
 app.include_router(analytics.router)
 
 @app.get("/")
+@app.get("/api")
+@app.get("/api/")
 def root():
     return {
         "product": "VoiceArmor AI",

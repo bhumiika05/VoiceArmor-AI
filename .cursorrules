@@ -1,0 +1,17 @@
+# Cursor AI Rules for VoiceArmor-AI
+
+## Project Architecture & Tech Stack
+- **Backend**: FastAPI (Python 3.10+) with SQLAlchemy (SQLite DB), Pydantic v2, and custom AI/acoustic analysis engines (`backend/app/ai/`).
+- **Frontend**: React 18 + Vite SPA (`frontend/`) styled with Tailwind CSS and Lucide icons.
+- **Vercel Serverless Deployment**: Exposed via `api/index.py` Serverless Function entry point, configured in `vercel.json`.
+
+## Vercel Deployment & Serverless Considerations
+1. **Routing**: `vercel.json` routes `/api/(.*)` to `api/index.py` (FastAPI Serverless Function) and `/(.*)` to `/index.html` (Vite SPA).
+2. **Serverless Database**: On Vercel, the file system is read-only except `/tmp`. `backend/app/database.py` automatically detects Vercel environments (`VERCEL` / `VERCEL_ENV`) and uses `/tmp/voicearmor.db`.
+3. **Module Imports**: `api/index.py` adds the root directory to `sys.path` so `backend.app...` imports resolve cleanly.
+
+## Key Build & Verification Commands
+- **Frontend Build**: `cd frontend && npm install && npm run build`
+- **Backend Tests**: `python -m pytest`
+- **Run Backend Locally**: `uvicorn backend.app.main:app --reload --port 8000`
+- **Run Frontend Dev Server**: `cd frontend && npm run dev`

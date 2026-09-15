@@ -4,10 +4,15 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from backend.app.config import settings
 
-# For SQLite, enable check_same_thread=False
-connect_args = {"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
+db_url = settings.DATABASE_URL
+if os.getenv("VERCEL") or os.getenv("VERCEL_ENV"):
+    if "sqlite" in db_url and not db_url.startswith("sqlite:////tmp"):
+        db_url = "sqlite:////tmp/voicearmor.db"
 
-engine = create_engine(settings.DATABASE_URL, connect_args=connect_args, echo=False)
+# For SQLite, enable check_same_thread=False
+connect_args = {"check_same_thread": False} if "sqlite" in db_url else {}
+
+engine = create_engine(db_url, connect_args=connect_args, echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

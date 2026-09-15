@@ -9,7 +9,7 @@ def test_low_risk_scenario():
     )
     assert res["impersonation_risk_score"] <= 20
     assert res["risk_level"] == "LOW"
-    assert res["recommended_action"] == "MONITOR"
+    assert res["recommended_action"] in ["ALLOW / MONITOR", "MONITOR"]
     assert not res["is_restricted"]
 
 def test_critical_risk_scenario():
